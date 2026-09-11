@@ -1,155 +1,484 @@
+```html
 <!DOCTYPE html>
-<!--
-  ================================================================
-  READ THIS BEFORE YOU PASTE ANYTHING
-
-  When Gemini gives you a page, you do NOT paste it into a part of
-  this file. You replace the entire file.
-
-  Click into the editor, press Ctrl+A (Cmd+A on Mac), press Delete,
-  then paste. Everything here is meant to be thrown away.
-
-  Do that only AFTER your live link works. Get the link first.
-  ================================================================
--->
-<html lang="en">
+<html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>My first site</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Unbounded:wght@600;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy: #0d1d30;
-    --card: #142a44;
-    --line: #27466a;
-    --aqua: #6de1d7;
-    --text: #ffffff;
-    --muted: #94a9bf;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--navy);
-    color: var(--text);
-    font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
-    line-height: 1.6;
-    display: flex;
-    justify-content: center;
-    padding: 6vh 20px;
-  }
-  main { width: 100%; max-width: 640px; }
-  .badge {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--aqua);
-    margin-bottom: 18px;
-  }
-  h1 {
-    font-family: "Unbounded", "Manrope", sans-serif;
-    font-weight: 800;
-    font-size: clamp(38px, 9vw, 68px);
-    letter-spacing: -0.05em;
-    line-height: 1.02;
-    margin: 0 0 8px;
-  }
-  .name {
-    font-family: "Unbounded", "Manrope", sans-serif;
-    font-weight: 600;
-    font-size: clamp(18px, 4vw, 24px);
-    letter-spacing: -0.04em;
-    color: var(--aqua);
-    margin: 0 0 24px;
-  }
-  p.lead { font-size: 18px; color: var(--muted); margin: 0 0 34px; }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 26px 28px;
-    margin-bottom: 18px;
-  }
-  .card h2 {
-    font-family: "Unbounded", "Manrope", sans-serif;
-    font-weight: 600;
-    font-size: 15px;
-    letter-spacing: -0.03em;
-    text-transform: uppercase;
-    color: var(--aqua);
-    margin: 0 0 16px;
-  }
-  ol { margin: 0; padding-left: 20px; }
-  li { margin-bottom: 12px; color: var(--muted); }
-  li:last-child { margin-bottom: 0; }
-  li b { color: var(--text); font-weight: 700; }
-  code {
-    font-family: ui-monospace, "SF Mono", Consolas, monospace;
-    font-size: 0.92em;
-    background: #0a1727;
-    border: 1px solid var(--line);
-    border-radius: 5px;
-    padding: 1px 6px;
-    color: var(--aqua);
-  }
-  a { color: var(--aqua); }
-  footer {
-    margin-top: 30px;
-    font-size: 14px;
-    color: #6e839a;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喵喵记账 - 我的可爱记账本</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fcf4f6;
+            --main-pink: #ffb6c1;
+            --soft-pink: #ffe4e1;
+            --accent-color: #ff85a2;
+            --text-color: #5c4b51;
+            --white: #ffffff;
+            --green: #a8e6cf;
+            --card-shadow: 0 8px 24px rgba(255, 182, 193, 0.3);
+            --radius: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'ZCOOL KuaiLe', cursive, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#ffd1dc 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            border: 4px solid var(--soft-pink);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Header Area */
+        .header {
+            background-color: var(--soft-pink);
+            padding: 24px 20px 16px;
+            text-align: center;
+            position: relative;
+            border-bottom: 3px dashed var(--main-pink);
+        }
+
+        .header h1 {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 0px #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .summary-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 2px solid var(--soft-pink);
+        }
+
+        .summary-item {
+            text-align: center;
+        }
+
+        .summary-item .label {
+            font-size: 0.85rem;
+            color: #9e8a93;
+            margin-bottom: 4px;
+        }
+
+        .summary-item .amount {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .amount.balance { color: var(--accent-color); }
+        .amount.income { color: #51b897; }
+        .amount.expense { color: #ff6b6b; }
+
+        /* Form Area */
+        .form-container {
+            padding: 20px;
+            background-color: #fffafb;
+            border-bottom: 2px solid var(--soft-pink);
+        }
+
+        .type-toggle {
+            display: flex;
+            background: var(--soft-pink);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 16px;
+        }
+
+        .type-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-color);
+            transition: all 0.2s;
+        }
+
+        .type-btn.active {
+            background: var(--white);
+            color: var(--accent-color);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .input-group.full {
+            grid-template-columns: 1fr;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid var(--soft-pink);
+            border-radius: 12px;
+            outline: none;
+            font-size: 0.95rem;
+            color: var(--text-color);
+            background: var(--white);
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--main-pink);
+        }
+
+        .add-btn {
+            width: 100%;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 133, 162, 0.4);
+            transition: transform 0.1s, background-color 0.2s;
+        }
+
+        .add-btn:hover {
+            background: #ff6b8b;
+        }
+
+        .add-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* List Area */
+        .list-container {
+            padding: 20px;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .list-title {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .record-list {
+            list-style: none;
+        }
+
+        .record-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--white);
+            border: 2px solid var(--bg-color);
+            padding: 12px 16px;
+            border-radius: 16px;
+            margin-bottom: 10px;
+            animation: fadeIn 0.3s ease-in-out;
+            transition: transform 0.2s;
+        }
+
+        .record-item:hover {
+            transform: translateX(2px);
+            border-color: var(--soft-pink);
+        }
+
+        .record-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .record-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--soft-pink);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .record-details .title {
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        .record-details .date {
+            font-size: 0.75rem;
+            color: #b0a0a6;
+        }
+
+        .record-amount {
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .record-amount.expense { color: #ff6b6b; }
+        .record-amount.income { color: #51b897; }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #ffd1dc;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+
+        .record-item:hover .delete-btn {
+            color: #ff6b6b;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 0;
+            color: #c4b5b9;
+            font-size: 0.95rem;
+        }
+
+        .empty-state span {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Scrollbar styling */
+        .list-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .list-container::-webkit-scrollbar-thumb {
+            background-color: var(--soft-pink);
+            border-radius: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-<main>
 
-  <span class="badge">Cal Poly Vibe Coding &middot; Session 01</span>
+<div class="app-container">
+    <!-- Header -->
+    <div class="header">
+        <h1>🐾 喵喵记账本 🐾</h1>
+        <div class="summary-card">
+            <div class="summary-item">
+                <div class="label">本月结余</div>
+                <div class="amount balance" id="total-balance">¥0.00</div>
+            </div>
+            <div class="summary-item">
+                <div class="label">总收入</div>
+                <div class="amount income" id="total-income">¥0.00</div>
+            </div>
+            <div class="summary-item">
+                <div class="label">总支出</div>
+                <div class="amount expense" id="total-expense">¥0.00</div>
+            </div>
+        </div>
+    </div>
 
-  <h1>It&rsquo;s live.</h1>
+    <!-- Input Form -->
+    <div class="form-container">
+        <div class="type-toggle">
+            <button class="type-btn active" id="btn-expense" onclick="setType('expense')">💸 支出</button>
+            <button class="type-btn" id="btn-income" onclick="setType('income')">💰 收入</button>
+        </div>
+        
+        <form id="tracker-form" onsubmit="addRecord(event)">
+            <div class="input-group">
+                <select id="category" required>
+                    <option value="🍱 餐饮">🍱 餐饮</option>
+                    <option value="🛍️ 购物">🛍️ 购物</option>
+                    <option value="🚌 交通">🚌 交通</option>
+                    <option value="🎮 娱乐">🎮 娱乐</option>
+                    <option value="🏠 居住">🏠 居住</option>
+                    <option value="🐱 宠物">🐱 宠物</option>
+                    <option value="✨ 其他">✨ 其他</option>
+                </select>
+                <input type="number" id="amount" placeholder="金额 (元)" step="0.01" min="0.01" required>
+            </div>
+            <div class="input-group full">
+                <input type="text" id="note" placeholder="备注（比如：买了大杯奶茶 🧋）" maxlength="20">
+            </div>
+            <button type="submit" class="add-btn">记一笔 🐾</button>
+        </form>
+    </div>
 
-  <!-- Step 5: change the name below to yours, then commit. -->
-  <p class="name">Built by Jean</p>
+    <!-- Record List -->
+    <div class="list-container">
+        <div class="list-title">
+            <span>明细记录</span>
+            <span style="font-size: 0.8rem; color: #b0a0a6;" id="record-count">共 0 笔</span>
+        </div>
+        <ul class="record-list" id="record-list">
+            <!-- Items generated by JS -->
+        </ul>
+    </div>
+</div>
 
-  <p class="lead">
-    This page is on the internet. Anyone you send this link to can open it,
-    on any device, right now. You made that happen in about five minutes.
-  </p>
+<script>
+    let currentType = 'expense';
+    let records = JSON.parse(localStorage.getItem('cute_accounts')) || [];
 
-  <div class="card">
-    <h2>Three things, in this order</h2>
-    <ol>
-      <li><b>Put your name on it.</b> Edit <code>index.html</code>, change
-        YOUR NAME HERE above, commit, refresh this page.</li>
-      <li><b>Submit this link.</b> Go to
-        <a href="https://www.calpolyvibecoding.com/">calpolyvibecoding.com</a>,
-        make an account, and paste this URL in. That is how you get counted,
-        and how Claude seats get assigned.</li>
-      <li><b>Then build.</b> Open Gemini, get a page, and replace this entire
-        file with it.</li>
-    </ol>
-  </div>
+    const categories = {
+        expense: ['🍱 餐饮', '🛍️ 购物', '🚌 交通', '🎮 娱乐', '🏠 居住', '🐱 宠物', '✨ 其他'],
+        income: ['💰 工资', '🎁 红包', '📈 理财', '🐟 兼职', '✨ 其他']
+    };
 
-  <div class="card">
-    <h2>How to replace this page</h2>
-    <ol>
-      <li>Copy what Gemini gives you with the <b>copy button</b> on the code
-        block. Do not click and drag.</li>
-      <li>Open <code>index.html</code> here and click the pencil icon.</li>
-      <li><b>Ctrl+A</b> (<b>Cmd+A</b> on Mac), then <b>Delete</b>. All of it.
-        Yes, really.</li>
-      <li>Paste, commit, refresh.</li>
-    </ol>
-  </div>
+    function setType(type) {
+        currentType = type;
+        document.getElementById('btn-expense').classList.toggle('active', type === 'expense');
+        document.getElementById('btn-income').classList.toggle('active', type === 'income');
+        
+        const categorySelect = document.getElementById('category');
+        categorySelect.innerHTML = categories[type]
+            .map(cat => `<option value="${cat}">${cat}</option>`)
+            .join('');
+    }
 
-  <footer>
-    Nothing on this page is precious. It exists so the link has something to
-    show before you have something of your own.
-  </footer>
+    function addRecord(e) {
+        e.preventDefault();
+        
+        const category = document.getElementById('category').value;
+        const amount = parseFloat(document.getElementById('amount').value);
+        const note = document.getElementById('note').value.trim();
+        
+        const record = {
+            id: Date.now(),
+            type: currentType,
+            category: category,
+            amount: amount,
+            note: note || category.split(' ')[1] || category,
+            date: new Date().toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' })
+        };
 
-</main>
+        records.unshift(record);
+        saveAndRender();
+        
+        document.getElementById('amount').value = '';
+        document.getElementById('note').value = '';
+    }
+
+    function deleteRecord(id) {
+        records = records.filter(record => record.id !== id);
+        saveAndRender();
+    }
+
+    function saveAndRender() {
+        localStorage.setItem('cute_accounts', JSON.stringify(records));
+        renderList();
+        updateSummary();
+    }
+
+    function updateSummary() {
+        let income = 0;
+        let expense = 0;
+
+        records.forEach(record => {
+            if (record.type === 'income') {
+                income += record.amount;
+            } else {
+                expense += record.amount;
+            }
+        });
+
+        const balance = income - expense;
+
+        document.getElementById('total-income').textContent = `¥${income.toFixed(2)}`;
+        document.getElementById('total-expense').textContent = `¥${expense.toFixed(2)}`;
+        document.getElementById('total-balance').textContent = `¥${balance.toFixed(2)}`;
+        document.getElementById('record-count').textContent = `共 ${records.length} 笔`;
+    }
+
+    function renderList() {
+        const listEl = document.getElementById('record-list');
+        
+        if (records.length === 0) {
+            listEl.innerHTML = `
+                <div class="empty-state">
+                    <span>🐱</span>
+                    还没有记账记录哦，快记一笔吧~
+                </div>
+            `;
+            return;
+        }
+
+        listEl.innerHTML = records.map(record => {
+            const icon = record.category.split(' ')[0] || '📝';
+            const isExpense = record.type === 'expense';
+            const sign = isExpense ? '-' : '+';
+            
+            return `
+                <li class="record-item">
+                    <div class="record-info">
+                        <div class="record-icon">${icon}</div>
+                        <div class="record-details">
+                            <div class="title">${escapeHtml(record.note)}</div>
+                            <div class="date">${record.date} · ${record.category.split(' ')[1] || ''}</div>
+                        </div>
+                    </div>
+                    <div class="record-amount ${record.type}">
+                        ${sign}¥${record.amount.toFixed(2)}
+                        <button class="delete-btn" onclick="deleteRecord(${record.id})" title="删除">✖</button>
+                    </div>
+                </li>
+            `;
+        }).join('');
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    // Initial render
+    renderList();
+    updateSummary();
+</script>
 </body>
 </html>
+
+```
