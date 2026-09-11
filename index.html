@@ -1,9 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐾 喵呜大学记账本 - Cute College Budget Tracker</title>
+    <title>🐾 喵喵记账本</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
@@ -44,7 +45,6 @@
             padding: 16px;
         }
 
-        /* App Container */
         .app-window {
             width: 100%;
             max-width: 520px;
@@ -60,7 +60,6 @@
             position: relative;
         }
 
-        /* Top Header */
         .header {
             background: var(--soft-yellow);
             padding: 14px 18px 12px;
@@ -86,7 +85,6 @@
             margin-top: 2px;
         }
 
-        /* Balance Banner */
         .balance-banner {
             background: #ffffff;
             margin: 12px 14px 6px;
@@ -121,7 +119,6 @@
             margin-top: 2px;
         }
 
-        /* Main Scrollable Content Area */
         .content-scroll {
             flex: 1;
             overflow-y: auto;
@@ -131,7 +128,6 @@
             gap: 16px;
         }
 
-        /* Cute Section Box */
         .section-box {
             background: var(--card-bg);
             border: 3px solid var(--border-color);
@@ -157,7 +153,6 @@
             gap: 6px;
         }
 
-        /* Add Record Form */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -228,7 +223,6 @@
             box-shadow: 0px 0px 0px var(--border-color);
         }
 
-        /* Categories & Budget List */
         .budget-list {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -265,7 +259,7 @@
             border: none;
             cursor: pointer;
             font-size: 0.8rem;
-            opacity: 0.6;
+            opacity: 0.8;
         }
 
         .edit-budget-btn:hover {
@@ -302,7 +296,6 @@
             color: var(--text-muted);
         }
 
-        /* Expense Log List */
         .records-list {
             display: flex;
             flex-direction: column;
@@ -398,7 +391,6 @@
             margin-bottom: 4px;
         }
 
-        /* Budget Edit Modal */
         .modal-overlay {
             position: absolute;
             top: 0;
@@ -454,7 +446,6 @@
         .modal-btn.save { background: var(--soft-green); }
         .modal-btn.cancel { background: #ffcdd2; }
 
-        /* Custom Scrollbar for cute vibe */
         .content-scroll::-webkit-scrollbar {
             width: 6px;
         }
@@ -473,16 +464,14 @@
 <body>
 
 <div class="app-window">
-    <!-- Header -->
     <div class="header">
-        <h1>🐱 喵呜大记账 🐰</h1>
-        <div class="sub-title">大学生日常可爱记账本 · 汇率 1 USD = 6.75 RMB</div>
+        <h1>🐾 喵喵记账本 🐰</h1>
+        <div class="sub-title">大学生日常可爱记账本 · 汇率 1 usd = 6.75 rmb</div>
     </div>
 
-    <!-- Remaining Total Balance Banner -->
     <div class="balance-banner">
         <div>
-            <div class="balance-title"><span>💰</span> 总预算剩余 (Total Balance)</div>
+            <div class="balance-title"><span>💰</span> 总预算剩余</div>
             <div class="balance-val" id="total-balance">$0.00</div>
         </div>
         <div>
@@ -491,41 +480,39 @@
         </div>
     </div>
 
-    <!-- Scrollable Content Section -->
     <div class="content-scroll">
 
-        <!-- Section 1: Add Expense Form -->
         <div class="section-box">
             <div class="section-title">
-                <span>✏️ 记一笔 (New Expense)</span>
+                <span>✏️ 记一笔</span>
             </div>
             <form id="expense-form" onsubmit="handleAddRecord(event)">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="category-select">分类 (Category)</label>
+                        <label for="category-select">分类</label>
                         <select id="category-select" required>
-                            <option value="萌物">🧸 萌物 (Cute Stuff)</option>
-                            <option value="礼物">🎁 礼物 (Gifts)</option>
-                            <option value="生活用品">🧻 生活用品 (Supplies)</option>
-                            <option value="旅行">✈️ 旅行 (Travel)</option>
-                            <option value="吃饭">🍱 吃饭 (Food & Drinks)</option>
-                            <option value="其余">✨ 其余 (Others)</option>
+                            <option value="萌物">🧸 萌物</option>
+                            <option value="礼物">🎁 礼物</option>
+                            <option value="生活用品">🧻 生活用品</option>
+                            <option value="旅行">✈️ 旅行</option>
+                            <option value="吃饭">🍱 吃饭</option>
+                            <option value="其余">✨ 其余</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="input-amount">金额 (Amount)</label>
+                        <label for="input-amount">金额</label>
                         <div class="currency-inputs">
                             <input type="number" id="input-amount" step="0.01" min="0.01" placeholder="0.00" required>
                             <select id="input-currency">
-                                <option value="USD">$ USD</option>
-                                <option value="RMB">¥ RMB</option>
+                                <option value="usd">$ usd</option>
+                                <option value="rmb">¥ rmb</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group full">
-                        <label for="input-item">买了啥 (Item Name / Notes)</label>
+                        <label for="input-item">买了啥</label>
                         <input type="text" id="input-item" placeholder="比如：盲盒/草莓波波奶茶/课本..." required maxlength="30">
                     </div>
 
@@ -534,37 +521,32 @@
             </form>
         </div>
 
-        <!-- Section 2: Categories Budget Management -->
         <div class="section-box">
             <div class="section-title">
-                <span>📊 各类预算计划 (Category Budgets)</span>
-                <span style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;">点击⚙️修改预算</span>
+                <span>📊 各类预算计划</span>
+                <span style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;">点击🪎修改预算</span>
             </div>
             <div class="budget-list" id="budget-list">
-                <!-- Dynamic budget cards -->
             </div>
         </div>
 
-        <!-- Section 3: Expense Records History -->
         <div class="section-box">
             <div class="section-title">
-                <span>📜 账单明细记录 (Expense Log)</span>
+                <span>📜 账单明细记录</span>
                 <span style="font-size:0.78rem; color:var(--text-muted);" id="record-count">共 0 笔</span>
             </div>
             <div class="records-list" id="records-list">
-                <!-- Dynamic record rows -->
             </div>
         </div>
 
     </div>
 </div>
 
-<!-- Modal for Editing Budget -->
 <div class="modal-overlay" id="budget-modal">
     <div class="modal-box">
         <div class="modal-title" id="modal-cat-title">修改预算</div>
         <div class="form-group">
-            <label>新预算金额 ($ USD)</label>
+            <label>新预算金额 ($ usd)</label>
             <input type="number" id="modal-budget-input" step="1" min="0" placeholder="以美元为单位">
         </div>
         <div class="modal-btns">
@@ -575,9 +557,8 @@
 </div>
 
 <script>
-    const EXCHANGE_RATE = 6.75; // 1 USD = 6.75 RMB
+    const EXCHANGE_RATE = 6.75;
 
-    // Category Meta Information
     const categoryMeta = {
         '萌物': { icon: '🧸', bg: '#ffe4e1' },
         '礼物': { icon: '🎁', bg: '#e8f5e9' },
@@ -587,7 +568,6 @@
         '其余': { icon: '✨', bg: '#f0f4c3' }
     };
 
-    // Default Budgets in USD
     const defaultBudgets = {
         '萌物': 50,
         '礼物': 100,
@@ -597,38 +577,33 @@
         '其余': 80
     };
 
-    // Application State
     let budgets = JSON.parse(localStorage.getItem('cute_budgets_usd')) || defaultBudgets;
     let records = JSON.parse(localStorage.getItem('cute_records_usd')) || [];
     let currentEditingCat = null;
 
-    // Initialization
     function init() {
         renderBudgets();
         renderRecords();
         updateTotals();
     }
 
-    // Save state to LocalStorage
     function saveData() {
         localStorage.setItem('cute_budgets_usd', JSON.stringify(budgets));
         localStorage.setItem('cute_records_usd', JSON.stringify(records));
     }
 
-    // Add Record Form Handler
     function handleAddRecord(e) {
         e.preventDefault();
 
         const category = document.getElementById('category-select').value;
-        const rawAmount = parseFloat(document.getElementById('amount-input')?.value || document.getElementById('input-amount').value);
+        const rawAmount = parseFloat(document.getElementById('input-amount').value);
         const currency = document.getElementById('input-currency').value;
         const itemName = document.getElementById('input-item').value.trim();
 
         if (isNaN(rawAmount) || rawAmount <= 0) return;
 
-        // Convert to USD if input is RMB
         let amountInUSD = rawAmount;
-        if (currency === 'RMB') {
+        if (currency === 'rmb') {
             amountInUSD = rawAmount / EXCHANGE_RATE;
         }
 
@@ -645,17 +620,14 @@
         records.unshift(newRecord);
         saveData();
 
-        // Reset inputs
         document.getElementById('input-amount').value = '';
         document.getElementById('input-item').value = '';
 
-        // Refresh UI
         renderBudgets();
         renderRecords();
         updateTotals();
     }
 
-    // Delete Record
     function deleteRecord(id) {
         records = records.filter(r => r.id !== id);
         saveData();
@@ -664,14 +636,12 @@
         updateTotals();
     }
 
-    // Calculate Category Spent (in USD)
     function getCategorySpent(cat) {
         return records
             .filter(r => r.category === cat)
             .reduce((sum, r) => sum + r.amountUSD, 0);
     }
 
-    // Update Banner Totals
     function updateTotals() {
         let totalBudgetUSD = 0;
         for (let cat in budgets) {
@@ -684,7 +654,6 @@
         document.getElementById('total-balance').textContent = `$${remainingBalance.toFixed(2)}`;
         document.getElementById('total-spent').textContent = `$${totalSpentUSD.toFixed(2)}`;
 
-        // Highlight red if total balance is negative
         const balanceEl = document.getElementById('total-balance');
         if (remainingBalance < 0) {
             balanceEl.style.color = '#ff1744';
@@ -693,7 +662,6 @@
         }
     }
 
-    // Render Category Budget Progress Cards
     function renderBudgets() {
         const container = document.getElementById('budget-list');
         container.innerHTML = '';
@@ -714,7 +682,7 @@
                 <div class="budget-card">
                     <div class="budget-card-header">
                         <span class="cat-name">${meta.icon} ${cat}</span>
-                        <button class="edit-budget-btn" onclick="openBudgetModal('${cat}')" title="设置预算">⚙️</button>
+                        <button class="edit-budget-btn" onclick="openBudgetModal('${cat}')" title="设置预算">🪎</button>
                     </div>
                     <div class="budget-progress-bg">
                         <div class="budget-progress-fill ${fillClass}" style="width: ${percent}%;"></div>
@@ -729,7 +697,6 @@
         }
     }
 
-    // Render Records History List
     function renderRecords() {
         const container = document.getElementById('records-list');
         const countEl = document.getElementById('record-count');
@@ -749,7 +716,7 @@
 
         records.forEach(r => {
             const meta = categoryMeta[r.category] || { icon: '🐾' };
-            const originalText = r.currency === 'RMB' 
+            const originalText = r.currency === 'rmb' 
                 ? `(¥${r.rawAmount.toFixed(2)})` 
                 : '';
 
@@ -775,10 +742,9 @@
         });
     }
 
-    // Budget Modal Functions
     function openBudgetModal(cat) {
         currentEditingCat = cat;
-        document.getElementById('modal-cat-title').textContent = `修改【${cat}】预算 ($ USD)`;
+        document.getElementById('modal-cat-title').textContent = `修改【${cat}】预算 ($ usd)`;
         document.getElementById('modal-budget-input').value = budgets[cat];
         document.getElementById('budget-modal').classList.add('active');
     }
@@ -800,14 +766,14 @@
         }
     }
 
-    // Security Helper
     function escapeHtml(str) {
         return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
     }
 
-    // Start App
     init();
 </script>
 
 </body>
 </html>
+
+```
