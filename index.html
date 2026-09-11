@@ -1,483 +1,813 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>喵喵记账 - 我的可爱记账本</title>
+    <title>🐾 喵呜大学记账本 - Cute College Budget Tracker</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #fcf4f6;
-            --main-pink: #ffb6c1;
-            --soft-pink: #ffe4e1;
-            --accent-color: #ff85a2;
-            --text-color: #5c4b51;
-            --white: #ffffff;
-            --green: #a8e6cf;
-            --card-shadow: 0 8px 24px rgba(255, 182, 193, 0.3);
-            --radius: 24px;
+            --bg-color: #fff9f2;
+            --main-pink: #ffb7c5;
+            --soft-yellow: #fff3a7;
+            --soft-green: #c8e6c9;
+            --soft-blue: #b3e5fc;
+            --card-bg: #ffffff;
+            --text-color: #5d4037;
+            --text-muted: #8d6e63;
+            --border-color: #5d4037;
+            --shadow: 4px 4px 0px #5d4037;
+            --radius: 20px;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'ZCOOL KuaiLe', cursive, sans-serif;
+            font-family: 'ZCOOL KuaiLe', cursive, -apple-system, sans-serif;
+            color: var(--text-color);
         }
 
         body {
             background-color: var(--bg-color);
-            background-image: radial-gradient(#ffd1dc 1.5px, transparent 1.5px);
-            background-size: 24px 24px;
-            color: var(--text-color);
+            background-image: 
+                radial-gradient(#ffd1dc 15%, transparent 16%),
+                radial-gradient(#ffd1dc 15%, transparent 16%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 16px;
         }
 
-        .app-container {
+        /* App Container */
+        .app-window {
             width: 100%;
-            max-width: 480px;
-            background: var(--white);
+            max-width: 520px;
+            height: 92vh;
+            max-height: 880px;
+            background: var(--bg-color);
+            border: 3.5px solid var(--border-color);
             border-radius: var(--radius);
-            box-shadow: var(--card-shadow);
-            border: 4px solid var(--soft-pink);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
             position: relative;
         }
 
-        /* Header Area */
+        /* Top Header */
         .header {
-            background-color: var(--soft-pink);
-            padding: 24px 20px 16px;
+            background: var(--soft-yellow);
+            padding: 14px 18px 12px;
+            border-bottom: 3.5px solid var(--border-color);
             text-align: center;
             position: relative;
-            border-bottom: 3px dashed var(--main-pink);
+            flex-shrink: 0;
         }
 
         .header h1 {
-            color: var(--accent-color);
-            font-size: 1.8rem;
-            margin-bottom: 12px;
-            text-shadow: 2px 2px 0px #fff;
+            font-size: 1.6rem;
+            color: var(--text-color);
+            letter-spacing: 1px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
 
-        .summary-card {
-            background: var(--white);
+        .sub-title {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Balance Banner */
+        .balance-banner {
+            background: #ffffff;
+            margin: 12px 14px 6px;
+            padding: 12px 16px;
+            border: 3px solid var(--border-color);
             border-radius: 16px;
-            padding: 16px;
+            box-shadow: 3px 3px 0px var(--border-color);
             display: flex;
-            justify-content: space-around;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            border: 2px solid var(--soft-pink);
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
         }
 
-        .summary-item {
-            text-align: center;
+        .balance-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .summary-item .label {
-            font-size: 0.85rem;
-            color: #9e8a93;
-            margin-bottom: 4px;
-        }
-
-        .summary-item .amount {
-            font-size: 1.2rem;
+        .balance-val {
+            font-size: 1.6rem;
             font-weight: bold;
+            color: #d81b60;
         }
 
-        .amount.balance { color: var(--accent-color); }
-        .amount.income { color: #51b897; }
-        .amount.expense { color: #ff6b6b; }
-
-        /* Form Area */
-        .form-container {
-            padding: 20px;
-            background-color: #fffafb;
-            border-bottom: 2px solid var(--soft-pink);
+        .rate-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: 2px;
         }
 
-        .type-toggle {
-            display: flex;
-            background: var(--soft-pink);
-            border-radius: 12px;
-            padding: 4px;
-            margin-bottom: 16px;
-        }
-
-        .type-btn {
+        /* Main Scrollable Content Area */
+        .content-scroll {
             flex: 1;
-            border: none;
-            background: transparent;
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            color: var(--text-color);
-            transition: all 0.2s;
+            overflow-y: auto;
+            padding: 10px 14px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
-        .type-btn.active {
-            background: var(--white);
-            color: var(--accent-color);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        /* Cute Section Box */
+        .section-box {
+            background: var(--card-bg);
+            border: 3px solid var(--border-color);
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 3px 3px 0px var(--border-color);
+            position: relative;
         }
 
-        .input-group {
+        .section-title {
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 6px;
+            border-bottom: 2px dashed var(--main-pink);
+        }
+
+        .section-title span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Add Record Form */
+        .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
-            margin-bottom: 12px;
         }
 
-        .input-group.full {
-            grid-template-columns: 1fr;
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
         }
 
         input, select {
             width: 100%;
-            padding: 10px 14px;
-            border: 2px solid var(--soft-pink);
-            border-radius: 12px;
+            padding: 8px 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 0.9rem;
             outline: none;
-            font-size: 0.95rem;
-            color: var(--text-color);
-            background: var(--white);
-            transition: border-color 0.2s;
+            background: #fff8f9;
         }
 
         input:focus, select:focus {
-            border-color: var(--main-pink);
+            background: #ffffff;
+            border-color: #ff6b8b;
         }
 
-        .add-btn {
-            width: 100%;
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(255, 133, 162, 0.4);
-            transition: transform 0.1s, background-color 0.2s;
+        .currency-inputs {
+            display: flex;
+            gap: 6px;
         }
 
-        .add-btn:hover {
-            background: #ff6b8b;
+        .currency-inputs input {
+            flex: 1;
         }
 
-        .add-btn:active {
-            transform: scale(0.98);
+        .currency-inputs select {
+            width: 80px;
+            flex-shrink: 0;
         }
 
-        /* List Area */
-        .list-container {
-            padding: 20px;
-            max-height: 320px;
-            overflow-y: auto;
-        }
-
-        .list-title {
-            font-size: 1rem;
+        .btn-add {
+            grid-column: span 2;
+            background: var(--main-pink);
             color: var(--text-color);
-            margin-bottom: 12px;
+            border: 2.5px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px var(--border-color);
+            transition: all 0.1s;
+            margin-top: 4px;
+        }
+
+        .btn-add:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px var(--border-color);
+        }
+
+        /* Categories & Budget List */
+        .budget-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .budget-card {
+            background: #fff8f5;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: relative;
+        }
+
+        .budget-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cat-name {
+            font-size: 0.95rem;
+            font-weight: bold;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 4px;
         }
 
-        .record-list {
-            list-style: none;
+        .edit-budget-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        .edit-budget-btn:hover {
+            opacity: 1;
+        }
+
+        .budget-progress-bg {
+            height: 10px;
+            background: #e0e0e0;
+            border: 1.5px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .budget-progress-fill {
+            height: 100%;
+            background: var(--soft-green);
+            width: 100%;
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .budget-progress-fill.warning {
+            background: #ffd54f;
+        }
+
+        .budget-progress-fill.danger {
+            background: #ff8a80;
+        }
+
+        .budget-numbers {
+            font-size: 0.78rem;
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+        }
+
+        /* Expense Log List */
+        .records-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .record-item {
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: var(--white);
-            border: 2px solid var(--bg-color);
-            padding: 12px 16px;
-            border-radius: 16px;
-            margin-bottom: 10px;
-            animation: fadeIn 0.3s ease-in-out;
-            transition: transform 0.2s;
+            animation: popIn 0.2s ease-out;
         }
 
-        .record-item:hover {
-            transform: translateX(2px);
-            border-color: var(--soft-pink);
-        }
-
-        .record-info {
+        .record-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .record-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--soft-pink);
+            width: 36px;
+            height: 36px;
+            background: var(--soft-yellow);
+            border: 2px solid var(--border-color);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-        }
-
-        .record-details .title {
-            font-size: 1rem;
-            color: var(--text-color);
-        }
-
-        .record-details .date {
-            font-size: 0.75rem;
-            color: #b0a0a6;
-        }
-
-        .record-amount {
             font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .record-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .record-title {
+            font-size: 0.92rem;
             font-weight: bold;
+        }
+
+        .record-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .record-right {
+            text-align: right;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .record-amount.expense { color: #ff6b6b; }
-        .record-amount.income { color: #51b897; }
+        .record-amount-usd {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #d32f2f;
+        }
 
-        .delete-btn {
+        .record-amount-original {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .btn-del {
             background: none;
             border: none;
-            color: #ffd1dc;
+            color: #ccc;
             cursor: pointer;
-            font-size: 1rem;
-            padding: 4px;
-            transition: color 0.2s;
+            font-size: 0.9rem;
+            padding: 2px 4px;
         }
 
-        .record-item:hover .delete-btn {
-            color: #ff6b6b;
+        .btn-del:hover {
+            color: #ff5252;
         }
 
-        .empty-state {
+        .empty-tip {
             text-align: center;
-            padding: 30px 0;
-            color: #c4b5b9;
-            font-size: 0.95rem;
+            padding: 20px 0;
+            color: var(--text-muted);
+            font-size: 0.88rem;
         }
 
-        .empty-state span {
-            font-size: 2.5rem;
+        .empty-tip span {
+            font-size: 2rem;
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
-        /* Scrollbar styling */
-        .list-container::-webkit-scrollbar {
+        /* Budget Edit Modal */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: var(--bg-color);
+            border: 3.5px solid var(--border-color);
+            border-radius: 18px;
+            padding: 16px;
+            width: 85%;
+            max-width: 320px;
+            box-shadow: var(--shadow);
+        }
+
+        .modal-title {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 8px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .modal-btn.save { background: var(--soft-green); }
+        .modal-btn.cancel { background: #ffcdd2; }
+
+        /* Custom Scrollbar for cute vibe */
+        .content-scroll::-webkit-scrollbar {
             width: 6px;
         }
-        .list-container::-webkit-scrollbar-thumb {
-            background-color: var(--soft-pink);
+        .content-scroll::-webkit-scrollbar-thumb {
+            background: var(--main-pink);
             border-radius: 10px;
+            border: 1px solid var(--border-color);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-<div class="app-container">
+<div class="app-window">
     <!-- Header -->
     <div class="header">
-        <h1>🐾 喵喵记账本 🐾</h1>
-        <div class="summary-card">
-            <div class="summary-item">
-                <div class="label">本月结余</div>
-                <div class="amount balance" id="total-balance">¥0.00</div>
-            </div>
-            <div class="summary-item">
-                <div class="label">总收入</div>
-                <div class="amount income" id="total-income">¥0.00</div>
-            </div>
-            <div class="summary-item">
-                <div class="label">总支出</div>
-                <div class="amount expense" id="total-expense">¥0.00</div>
-            </div>
+        <h1>🐱 喵呜大记账 🐰</h1>
+        <div class="sub-title">大学生日常可爱记账本 · 汇率 1 USD = 6.75 RMB</div>
+    </div>
+
+    <!-- Remaining Total Balance Banner -->
+    <div class="balance-banner">
+        <div>
+            <div class="balance-title"><span>💰</span> 总预算剩余 (Total Balance)</div>
+            <div class="balance-val" id="total-balance">$0.00</div>
+        </div>
+        <div>
+            <div class="rate-hint">本月已花: <span id="total-spent" style="color:#d32f2f; font-weight:bold;">$0.00</span></div>
+            <div class="rate-hint">固定汇率: 6.75</div>
         </div>
     </div>
 
-    <!-- Input Form -->
-    <div class="form-container">
-        <div class="type-toggle">
-            <button class="type-btn active" id="btn-expense" onclick="setType('expense')">💸 支出</button>
-            <button class="type-btn" id="btn-income" onclick="setType('income')">💰 收入</button>
-        </div>
-        
-        <form id="tracker-form" onsubmit="addRecord(event)">
-            <div class="input-group">
-                <select id="category" required>
-                    <option value="🍱 餐饮">🍱 餐饮</option>
-                    <option value="🛍️ 购物">🛍️ 购物</option>
-                    <option value="🚌 交通">🚌 交通</option>
-                    <option value="🎮 娱乐">🎮 娱乐</option>
-                    <option value="🏠 居住">🏠 居住</option>
-                    <option value="🐱 宠物">🐱 宠物</option>
-                    <option value="✨ 其他">✨ 其他</option>
-                </select>
-                <input type="number" id="amount" placeholder="金额 (刀乐)" step="0.01" min="0.01" required>
-            </div>
-            <div class="input-group full">
-                <input type="text" id="note" placeholder="备注（比如：买了大杯奶茶 🧋）" maxlength="20">
-            </div>
-            <button type="submit" class="add-btn">记一笔 🐾</button>
-        </form>
-    </div>
+    <!-- Scrollable Content Section -->
+    <div class="content-scroll">
 
-    <!-- Record List -->
-    <div class="list-container">
-        <div class="list-title">
-            <span>明细记录</span>
-            <span style="font-size: 0.8rem; color: #b0a0a6;" id="record-count">共 0 笔</span>
+        <!-- Section 1: Add Expense Form -->
+        <div class="section-box">
+            <div class="section-title">
+                <span>✏️ 记一笔 (New Expense)</span>
+            </div>
+            <form id="expense-form" onsubmit="handleAddRecord(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="category-select">分类 (Category)</label>
+                        <select id="category-select" required>
+                            <option value="萌物">🧸 萌物 (Cute Stuff)</option>
+                            <option value="礼物">🎁 礼物 (Gifts)</option>
+                            <option value="生活用品">🧻 生活用品 (Supplies)</option>
+                            <option value="旅行">✈️ 旅行 (Travel)</option>
+                            <option value="吃饭">🍱 吃饭 (Food & Drinks)</option>
+                            <option value="其余">✨ 其余 (Others)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="input-amount">金额 (Amount)</label>
+                        <div class="currency-inputs">
+                            <input type="number" id="input-amount" step="0.01" min="0.01" placeholder="0.00" required>
+                            <select id="input-currency">
+                                <option value="USD">$ USD</option>
+                                <option value="RMB">¥ RMB</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group full">
+                        <label for="input-item">买了啥 (Item Name / Notes)</label>
+                        <input type="text" id="input-item" placeholder="比如：盲盒/草莓波波奶茶/课本..." required maxlength="30">
+                    </div>
+
+                    <button type="submit" class="btn-add">🐾 记入账本 🐾</button>
+                </div>
+            </form>
         </div>
-        <ul class="record-list" id="record-list">
-            <!-- Items generated by JS -->
-        </ul>
+
+        <!-- Section 2: Categories Budget Management -->
+        <div class="section-box">
+            <div class="section-title">
+                <span>📊 各类预算计划 (Category Budgets)</span>
+                <span style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;">点击⚙️修改预算</span>
+            </div>
+            <div class="budget-list" id="budget-list">
+                <!-- Dynamic budget cards -->
+            </div>
+        </div>
+
+        <!-- Section 3: Expense Records History -->
+        <div class="section-box">
+            <div class="section-title">
+                <span>📜 账单明细记录 (Expense Log)</span>
+                <span style="font-size:0.78rem; color:var(--text-muted);" id="record-count">共 0 笔</span>
+            </div>
+            <div class="records-list" id="records-list">
+                <!-- Dynamic record rows -->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal for Editing Budget -->
+<div class="modal-overlay" id="budget-modal">
+    <div class="modal-box">
+        <div class="modal-title" id="modal-cat-title">修改预算</div>
+        <div class="form-group">
+            <label>新预算金额 ($ USD)</label>
+            <input type="number" id="modal-budget-input" step="1" min="0" placeholder="以美元为单位">
+        </div>
+        <div class="modal-btns">
+            <button class="modal-btn cancel" onclick="closeBudgetModal()">取消</button>
+            <button class="modal-btn save" onclick="saveBudgetModal()">保存</button>
+        </div>
     </div>
 </div>
 
 <script>
-    let currentType = 'expense';
-    let records = JSON.parse(localStorage.getItem('cute_accounts')) || [];
+    const EXCHANGE_RATE = 6.75; // 1 USD = 6.75 RMB
 
-    const categories = {
-        expense: ['🍱 餐饮', '🛍️ 购物', '🚌 交通', '🎮 娱乐', '🏠 居住', '🐱 宠物', '✨ 其他'],
-        income: ['💰 工资', '🎁 红包', '📈 理财', '🐟 兼职', '✨ 其他']
+    // Category Meta Information
+    const categoryMeta = {
+        '萌物': { icon: '🧸', bg: '#ffe4e1' },
+        '礼物': { icon: '🎁', bg: '#e8f5e9' },
+        '生活用品': { icon: '🧻', bg: '#e1f5fe' },
+        '旅行': { icon: '✈️', bg: '#fff3e0' },
+        '吃饭': { icon: '🍱', bg: '#f3e5f5' },
+        '其余': { icon: '✨', bg: '#f0f4c3' }
     };
 
-    function setType(type) {
-        currentType = type;
-        document.getElementById('btn-expense').classList.toggle('active', type === 'expense');
-        document.getElementById('btn-income').classList.toggle('active', type === 'income');
-        
-        const categorySelect = document.getElementById('category');
-        categorySelect.innerHTML = categories[type]
-            .map(cat => `<option value="${cat}">${cat}</option>`)
-            .join('');
+    // Default Budgets in USD
+    const defaultBudgets = {
+        '萌物': 50,
+        '礼物': 100,
+        '生活用品': 120,
+        '旅行': 300,
+        '吃饭': 350,
+        '其余': 80
+    };
+
+    // Application State
+    let budgets = JSON.parse(localStorage.getItem('cute_budgets_usd')) || defaultBudgets;
+    let records = JSON.parse(localStorage.getItem('cute_records_usd')) || [];
+    let currentEditingCat = null;
+
+    // Initialization
+    function init() {
+        renderBudgets();
+        renderRecords();
+        updateTotals();
     }
 
-    function addRecord(e) {
+    // Save state to LocalStorage
+    function saveData() {
+        localStorage.setItem('cute_budgets_usd', JSON.stringify(budgets));
+        localStorage.setItem('cute_records_usd', JSON.stringify(records));
+    }
+
+    // Add Record Form Handler
+    function handleAddRecord(e) {
         e.preventDefault();
-        
-        const category = document.getElementById('category').value;
-        const amount = parseFloat(document.getElementById('amount').value);
-        const note = document.getElementById('note').value.trim();
-        
-        const record = {
+
+        const category = document.getElementById('category-select').value;
+        const rawAmount = parseFloat(document.getElementById('amount-input')?.value || document.getElementById('input-amount').value);
+        const currency = document.getElementById('input-currency').value;
+        const itemName = document.getElementById('input-item').value.trim();
+
+        if (isNaN(rawAmount) || rawAmount <= 0) return;
+
+        // Convert to USD if input is RMB
+        let amountInUSD = rawAmount;
+        if (currency === 'RMB') {
+            amountInUSD = rawAmount / EXCHANGE_RATE;
+        }
+
+        const newRecord = {
             id: Date.now(),
-            type: currentType,
             category: category,
-            amount: amount,
-            note: note || category.split(' ')[1] || category,
-            date: new Date().toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' })
+            itemName: itemName,
+            rawAmount: rawAmount,
+            currency: currency,
+            amountUSD: amountInUSD,
+            dateStr: new Date().toLocaleDateString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })
         };
 
-        records.unshift(record);
-        saveAndRender();
-        
-        document.getElementById('amount').value = '';
-        document.getElementById('note').value = '';
+        records.unshift(newRecord);
+        saveData();
+
+        // Reset inputs
+        document.getElementById('input-amount').value = '';
+        document.getElementById('input-item').value = '';
+
+        // Refresh UI
+        renderBudgets();
+        renderRecords();
+        updateTotals();
     }
 
+    // Delete Record
     function deleteRecord(id) {
-        records = records.filter(record => record.id !== id);
-        saveAndRender();
+        records = records.filter(r => r.id !== id);
+        saveData();
+        renderBudgets();
+        renderRecords();
+        updateTotals();
     }
 
-    function saveAndRender() {
-        localStorage.setItem('cute_accounts', JSON.stringify(records));
-        renderList();
-        updateSummary();
+    // Calculate Category Spent (in USD)
+    function getCategorySpent(cat) {
+        return records
+            .filter(r => r.category === cat)
+            .reduce((sum, r) => sum + r.amountUSD, 0);
     }
 
-    function updateSummary() {
-        let income = 0;
-        let expense = 0;
+    // Update Banner Totals
+    function updateTotals() {
+        let totalBudgetUSD = 0;
+        for (let cat in budgets) {
+            totalBudgetUSD += budgets[cat];
+        }
 
-        records.forEach(record => {
-            if (record.type === 'income') {
-                income += record.amount;
-            } else {
-                expense += record.amount;
-            }
-        });
+        let totalSpentUSD = records.reduce((sum, r) => sum + r.amountUSD, 0);
+        let remainingBalance = totalBudgetUSD - totalSpentUSD;
 
-        const balance = income - expense;
+        document.getElementById('total-balance').textContent = `$${remainingBalance.toFixed(2)}`;
+        document.getElementById('total-spent').textContent = `$${totalSpentUSD.toFixed(2)}`;
 
-        document.getElementById('total-income').textContent = `¥${income.toFixed(2)}`;
-        document.getElementById('total-expense').textContent = `¥${expense.toFixed(2)}`;
-        document.getElementById('total-balance').textContent = `¥${balance.toFixed(2)}`;
-        document.getElementById('record-count').textContent = `共 ${records.length} 笔`;
+        // Highlight red if total balance is negative
+        const balanceEl = document.getElementById('total-balance');
+        if (remainingBalance < 0) {
+            balanceEl.style.color = '#ff1744';
+        } else {
+            balanceEl.style.color = '#d81b60';
+        }
     }
 
-    function renderList() {
-        const listEl = document.getElementById('record-list');
-        
+    // Render Category Budget Progress Cards
+    function renderBudgets() {
+        const container = document.getElementById('budget-list');
+        container.innerHTML = '';
+
+        for (let cat in budgets) {
+            const budgetVal = budgets[cat];
+            const spentVal = getCategorySpent(cat);
+            const remaining = budgetVal - spentVal;
+            const percent = budgetVal > 0 ? Math.min(Math.max((spentVal / budgetVal) * 100, 0), 100) : 100;
+
+            let fillClass = '';
+            if (percent > 90) fillClass = 'danger';
+            else if (percent > 70) fillClass = 'warning';
+
+            const meta = categoryMeta[cat] || { icon: '🐾', bg: '#fff' };
+
+            const cardHtml = `
+                <div class="budget-card">
+                    <div class="budget-card-header">
+                        <span class="cat-name">${meta.icon} ${cat}</span>
+                        <button class="edit-budget-btn" onclick="openBudgetModal('${cat}')" title="设置预算">⚙️</button>
+                    </div>
+                    <div class="budget-progress-bg">
+                        <div class="budget-progress-fill ${fillClass}" style="width: ${percent}%;"></div>
+                    </div>
+                    <div class="budget-numbers">
+                        <span>余: $${remaining.toFixed(1)}</span>
+                        <span>设: $${budgetVal}</span>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', cardHtml);
+        }
+    }
+
+    // Render Records History List
+    function renderRecords() {
+        const container = document.getElementById('records-list');
+        const countEl = document.getElementById('record-count');
+        container.innerHTML = '';
+
+        countEl.textContent = `共 ${records.length} 笔`;
+
         if (records.length === 0) {
-            listEl.innerHTML = `
-                <div class="empty-state">
+            container.innerHTML = `
+                <div class="empty-tip">
                     <span>🐱</span>
-                    还没有记账记录哦，快记一笔吧~
+                    还没有买东西的记录哦，快去记一笔吧！
                 </div>
             `;
             return;
         }
 
-        listEl.innerHTML = records.map(record => {
-            const icon = record.category.split(' ')[0] || '📝';
-            const isExpense = record.type === 'expense';
-            const sign = isExpense ? '-' : '+';
-            
-            return `
-                <li class="record-item">
-                    <div class="record-info">
-                        <div class="record-icon">${icon}</div>
+        records.forEach(r => {
+            const meta = categoryMeta[r.category] || { icon: '🐾' };
+            const originalText = r.currency === 'RMB' 
+                ? `(¥${r.rawAmount.toFixed(2)})` 
+                : '';
+
+            const itemHtml = `
+                <div class="record-item">
+                    <div class="record-left">
+                        <div class="record-icon">${meta.icon}</div>
                         <div class="record-details">
-                            <div class="title">${escapeHtml(record.note)}</div>
-                            <div class="date">${record.date} · ${record.category.split(' ')[1] || ''}</div>
+                            <div class="record-title">${escapeHtml(r.itemName)}</div>
+                            <div class="record-sub">${r.category} · ${r.dateStr}</div>
                         </div>
                     </div>
-                    <div class="record-amount ${record.type}">
-                        ${sign}¥${record.amount.toFixed(2)}
-                        <button class="delete-btn" onclick="deleteRecord(${record.id})" title="删除">✖</button>
+                    <div class="record-right">
+                        <div>
+                            <div class="record-amount-usd">-$${r.amountUSD.toFixed(2)}</div>
+                            ${originalText ? `<div class="record-amount-original">${originalText}</div>` : ''}
+                        </div>
+                        <button class="btn-del" onclick="deleteRecord(${r.id})" title="删除记录">✖</button>
                     </div>
-                </li>
+                </div>
             `;
-        }).join('');
+            container.insertAdjacentHTML('beforeend', itemHtml);
+        });
     }
 
+    // Budget Modal Functions
+    function openBudgetModal(cat) {
+        currentEditingCat = cat;
+        document.getElementById('modal-cat-title').textContent = `修改【${cat}】预算 ($ USD)`;
+        document.getElementById('modal-budget-input').value = budgets[cat];
+        document.getElementById('budget-modal').classList.add('active');
+    }
+
+    function closeBudgetModal() {
+        document.getElementById('budget-modal').classList.remove('active');
+        currentEditingCat = null;
+    }
+
+    function saveBudgetModal() {
+        if (!currentEditingCat) return;
+        const newBudget = parseFloat(document.getElementById('modal-budget-input').value);
+        if (!isNaN(newBudget) && newBudget >= 0) {
+            budgets[currentEditingCat] = newBudget;
+            saveData();
+            renderBudgets();
+            updateTotals();
+            closeBudgetModal();
+        }
+    }
+
+    // Security Helper
     function escapeHtml(str) {
         return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
     }
 
-    // Initial render
-    renderList();
-    updateSummary();
+    // Start App
+    init();
 </script>
+
 </body>
 </html>
-
