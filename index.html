@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -441,6 +441,13 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
+            box-shadow: 2px 2px 0px var(--border-color);
+            transition: all 0.1s;
+        }
+
+        .modal-btn:active {
+            transform: translate(1px, 1px);
+            box-shadow: 0px 0px 0px var(--border-color);
         }
 
         .modal-btn.save { background: var(--soft-green); }
@@ -466,7 +473,7 @@
 <div class="app-window">
     <div class="header">
         <h1>🐾🌝 喵喵记账本 🌝🐾</h1>
-        <div class="sub-title">大学生日常可爱记账本 · 汇率 1 usd = 6.75 rmb</div>
+        <div class="sub-title">汇率 1 usd = 6.75 rmb</div>
     </div>
 
     <div class="balance-banner">
@@ -475,7 +482,7 @@
             <div class="balance-val" id="total-balance">$0.00</div>
         </div>
         <div>
-            <div class="rate-hint">总计已挥霍: <span id="total-spent" style="color:#d32f2f; font-weight:bold;">$0.00</span></div>
+            <div class="rate-hint">已挥霍: <span id="total-spent" style="color:#d32f2f; font-weight:bold;">$0.00</span></div>
             <div class="rate-hint">汇率: 6.75</div>
         </div>
     </div>
@@ -556,6 +563,19 @@
     </div>
 </div>
 
+<div class="modal-overlay" id="delete-modal">
+    <div class="modal-box">
+        <div class="modal-title">🗑️ 确认要删除这笔记录吗？</div>
+        <div style="font-size:0.85rem; color:var(--text-muted); text-align:center; margin-bottom:12px;" id="delete-item-desc">
+            此操作无法撤销哦
+        </div>
+        <div class="modal-btns">
+            <button class="modal-btn save" onclick="confirmDeleteRecord()">是</button>
+            <button class="modal-btn cancel" onclick="closeDeleteModal()">否</button>
+        </div>
+    </div>
+</div>
+
 <script>
     const EXCHANGE_RATE = 6.75;
 
@@ -580,6 +600,7 @@
     let budgets = JSON.parse(localStorage.getItem('cute_budgets_usd')) || defaultBudgets;
     let records = JSON.parse(localStorage.getItem('cute_records_usd')) || [];
     let currentEditingCat = null;
+    let recordToDeleteId = null;
 
     function init() {
         renderBudgets();
@@ -628,12 +649,28 @@
         updateTotals();
     }
 
-    function deleteRecord(id) {
-        records = records.filter(r => r.id !== id);
-        saveData();
-        renderBudgets();
-        renderRecords();
-        updateTotals();
+    function promptDeleteRecord(id) {
+        const item = records.find(r => r.id === id);
+        if (!item) return;
+        recordToDeleteId = id;
+        document.getElementById('delete-item-desc').textContent = `删除「${item.itemName}」?`;
+        document.getElementById('delete-modal').classList.add('active');
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('delete-modal').classList.remove('active');
+        recordToDeleteId = null;
+    }
+
+    function confirmDeleteRecord() {
+        if (recordToDeleteId !== null) {
+            records = records.filter(r => r.id !== recordToDeleteId);
+            saveData();
+            renderBudgets();
+            renderRecords();
+            updateTotals();
+        }
+        closeDeleteModal();
     }
 
     function getCategorySpent(cat) {
@@ -734,7 +771,7 @@
                             <div class="record-amount-usd">-$${r.amountUSD.toFixed(2)}</div>
                             ${originalText ? `<div class="record-amount-original">${originalText}</div>` : ''}
                         </div>
-                        <button class="btn-del" onclick="deleteRecord(${r.id})" title="删除记录">✖</button>
+                        <button class="btn-del" onclick="promptDeleteRecord(${r.id})" title="删除记录">✖</button>
                     </div>
                 </div>
             `;
@@ -776,4 +813,3 @@
 </body>
 </html>
 
-```
