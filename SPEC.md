@@ -68,6 +68,20 @@ off a decision the model would otherwise make badly on its own.
 
 ---
 
+## My prompt
+
+- **Thing:** 一个给大学生记账的网页
+- **Audience:** 我自己每天做记账总结或者买完东西之后 
+- **Requirements:** 要有不同种类的记账（萌物，礼物，生活用品，旅行，吃饭，其余），要有一个剩余总金额的记录，有些时候是输入人民币，有些时候输入美元，记账本用美元，汇率按照6.75来算，还要有一个可以更改的计划在每个种类上支出多少钱，每次在那个种类上花钱了就在那一类的预算里面扣
+- **Guardrails:** 不需要账户和密码，不要等待太久才刷新
+- **Experience:** 要可爱，小动物元素，手绘风格，one page 但是里面记账模块可以scroll
+- **Test:** 我可以随时查看我的支出情况和用来买到了一些啥
+
+Nothing in there is clever. It is specific, it is short, and every line closes
+off a decision the model would otherwise make badly on its own.
+
+---
+
 ## Why this file exists
 
 You built this site twice today. Once from a one-line prompt, once from the six
