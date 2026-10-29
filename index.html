@@ -33,7 +33,7 @@
 
         body {
             background-color: var(--bg-color);
-            background-image: 
+            background-image:
                 radial-gradient(#ffd1dc 15%, transparent 16%),
                 radial-gradient(#ffd1dc 15%, transparent 16%);
             background-size: 30px 30px;
@@ -450,12 +450,18 @@
             box-shadow: 0px 0px 0px var(--border-color);
         }
 
-        .modal-btn.save { background: var(--soft-green); }
-        .modal-btn.cancel { background: #ffcdd2; }
+        .modal-btn.save {
+            background: var(--soft-green);
+        }
+
+        .modal-btn.cancel {
+            background: #ffcdd2;
+        }
 
         .content-scroll::-webkit-scrollbar {
             width: 6px;
         }
+
         .content-scroll::-webkit-scrollbar-thumb {
             background: var(--main-pink);
             border-radius: 10px;
@@ -463,14 +469,22 @@
         }
 
         @keyframes popIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
     </style>
 </head>
+
 <body>
 
 <div class="app-window">
+
     <div class="header">
         <h1>🐾🌝 喵喵记账本 🌝🐾</h1>
         <div class="sub-title">汇率 1 usd = 6.75 rmb</div>
@@ -478,11 +492,17 @@
 
     <div class="balance-banner">
         <div>
-            <div class="balance-title"><span>💰</span> 总预算剩余</div>
+            <div class="balance-title">
+                <span>💰</span> 总预算剩余
+            </div>
             <div class="balance-val" id="total-balance">$0.00</div>
         </div>
+
         <div>
-            <div class="rate-hint">已挥霍: <span id="total-spent" style="color:#d32f2f; font-weight:bold;">$0.00</span></div>
+            <div class="rate-hint">
+                已挥霍:
+                <span id="total-spent" style="color:#d32f2f; font-weight:bold;">$0.00</span>
+            </div>
             <div class="rate-hint">汇率: 6.75</div>
         </div>
     </div>
@@ -493,15 +513,17 @@
             <div class="section-title">
                 <span>✏️ 记一笔</span>
             </div>
+
             <form id="expense-form" onsubmit="handleAddRecord(event)">
                 <div class="form-grid">
+
                     <div class="form-group">
                         <label for="category-select">分类</label>
                         <select id="category-select" required>
                             <option value="萌物">🧸 萌物</option>
                             <option value="礼物">🎁 礼物</option>
                             <option value="生活用品">🧻 生活用品</option>
-                            <option value="旅行">✈️ 旅行</option>
+                            <option value="出行">🚏 出行</option>
                             <option value="吃饭">🍱 吃饭</option>
                             <option value="其余">✨ 其余</option>
                         </select>
@@ -510,7 +532,14 @@
                     <div class="form-group">
                         <label for="input-amount">金额</label>
                         <div class="currency-inputs">
-                            <input type="number" id="input-amount" step="0.01" min="0.01" placeholder="0.00" required>
+                            <input
+                                type="number"
+                                id="input-amount"
+                                step="0.01"
+                                min="0.01"
+                                placeholder="0.00"
+                                required
+                            >
                             <select id="input-currency">
                                 <option value="usd">$ usd</option>
                                 <option value="rmb">¥ rmb</option>
@@ -520,10 +549,19 @@
 
                     <div class="form-group full">
                         <label for="input-item">买了啥</label>
-                        <input type="text" id="input-item" placeholder="比如：盲盒/草莓波波奶茶/课本..." required maxlength="30">
+                        <input
+                            type="text"
+                            id="input-item"
+                            placeholder="比如：盲盒/草莓波波奶茶/课本..."
+                            required
+                            maxlength="30"
+                        >
                     </div>
 
-                    <button type="submit" class="btn-add">🐾 记入账本 🐾</button>
+                    <button type="submit" class="btn-add">
+                        🐾 记入账本 🐾
+                    </button>
+
                 </div>
             </form>
         </div>
@@ -531,8 +569,11 @@
         <div class="section-box">
             <div class="section-title">
                 <span>🪽 各类预算计划</span>
-                <span style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;">点击🪎修改预算</span>
+                <span style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;">
+                    点击🪎修改预算
+                </span>
             </div>
+
             <div class="budget-list" id="budget-list">
             </div>
         </div>
@@ -540,8 +581,12 @@
         <div class="section-box">
             <div class="section-title">
                 <span>🙈 账单明细记录</span>
-                <span style="font-size:0.78rem; color:var(--text-muted);" id="record-count">共 0 笔</span>
+                <span
+                    style="font-size:0.78rem; color:var(--text-muted);"
+                    id="record-count"
+                >共 0 笔</span>
             </div>
+
             <div class="records-list" id="records-list">
             </div>
         </div>
@@ -549,85 +594,170 @@
     </div>
 </div>
 
+<!-- 修改预算弹窗 -->
 <div class="modal-overlay" id="budget-modal">
     <div class="modal-box">
-        <div class="modal-title" id="modal-cat-title">修改预算</div>
+
+        <div class="modal-title" id="modal-cat-title">
+            修改预算
+        </div>
+
         <div class="form-group">
             <label>新预算金额 ($ usd)</label>
-            <input type="number" id="modal-budget-input" step="1" min="0" placeholder="以美元为单位">
+            <input
+                type="number"
+                id="modal-budget-input"
+                step="1"
+                min="0"
+                placeholder="以美元为单位"
+            >
         </div>
+
         <div class="modal-btns">
-            <button class="modal-btn cancel" onclick="closeBudgetModal()">取消</button>
-            <button class="modal-btn save" onclick="saveBudgetModal()">保存</button>
+            <button class="modal-btn cancel" onclick="closeBudgetModal()">
+                取消
+            </button>
+            <button class="modal-btn save" onclick="saveBudgetModal()">
+                保存
+            </button>
         </div>
+
     </div>
 </div>
 
+<!-- 删除记录弹窗 -->
 <div class="modal-overlay" id="delete-modal">
     <div class="modal-box">
-        <div class="modal-title">🗑️ 确认要删除这笔记录吗？</div>
-        <div style="font-size:0.85rem; color:var(--text-muted); text-align:center; margin-bottom:12px;" id="delete-item-desc">
+
+        <div class="modal-title">
+            🗑️ 确认要删除这笔记录吗？
+        </div>
+
+        <div
+            style="font-size:0.85rem; color:var(--text-muted); text-align:center; margin-bottom:12px;"
+            id="delete-item-desc"
+        >
             此操作无法撤销哦
         </div>
+
         <div class="modal-btns">
-            <button class="modal-btn save" onclick="confirmDeleteRecord()">是</button>
-            <button class="modal-btn cancel" onclick="closeDeleteModal()">否</button>
+            <button class="modal-btn save" onclick="confirmDeleteRecord()">
+                是
+            </button>
+            <button class="modal-btn cancel" onclick="closeDeleteModal()">
+                否
+            </button>
         </div>
+
     </div>
 </div>
 
 <script>
+    // 汇率：1 USD = 6.75 RMB
     const EXCHANGE_RATE = 6.75;
 
+    // 分类图标和背景颜色
     const categoryMeta = {
-        '萌物': { icon: '🧸', bg: '#ffe4e1' },
-        '礼物': { icon: '🎁', bg: '#e8f5e9' },
-        '生活用品': { icon: '🧻', bg: '#e1f5fe' },
-        '旅行': { icon: '✈️', bg: '#fff3e0' },
-        '吃饭': { icon: '🍱', bg: '#f3e5f5' },
-        '其余': { icon: '✨', bg: '#f0f4c3' }
+        '萌物': {
+            icon: '🧸',
+            bg: '#ffe4e1'
+        },
+        '礼物': {
+            icon: '🎁',
+            bg: '#e8f5e9'
+        },
+        '生活用品': {
+            icon: '🧻',
+            bg: '#e1f5fe'
+        },
+        '出行': {
+            icon: '🚏',
+            bg: '#fff3e0'
+        },
+        '吃饭': {
+            icon: '🍱',
+            bg: '#f3e5f5'
+        },
+        '其余': {
+            icon: '✨',
+            bg: '#f0f4c3'
+        }
     };
 
+    // 各分类默认预算（美元）
     const defaultBudgets = {
         '萌物': 50,
         '礼物': 100,
         '生活用品': 120,
-        '旅行': 300,
+        '出行': 300,
         '吃饭': 350,
         '其余': 80
     };
 
-    let budgets = JSON.parse(localStorage.getItem('cute_budgets_usd')) || defaultBudgets;
-    let records = JSON.parse(localStorage.getItem('cute_records_usd')) || [];
+    // 从浏览器本地读取数据
+    let budgets =
+        JSON.parse(localStorage.getItem('cute_budgets_usd'))
+        || defaultBudgets;
+
+    let records =
+        JSON.parse(localStorage.getItem('cute_records_usd'))
+        || [];
+
     let currentEditingCat = null;
     let recordToDeleteId = null;
 
+
+    // 初始化
     function init() {
         renderBudgets();
         renderRecords();
         updateTotals();
     }
 
+
+    // 保存数据到浏览器
     function saveData() {
-        localStorage.setItem('cute_budgets_usd', JSON.stringify(budgets));
-        localStorage.setItem('cute_records_usd', JSON.stringify(records));
+        localStorage.setItem(
+            'cute_budgets_usd',
+            JSON.stringify(budgets)
+        );
+
+        localStorage.setItem(
+            'cute_records_usd',
+            JSON.stringify(records)
+        );
     }
 
+
+    // 添加一笔消费记录
     function handleAddRecord(e) {
         e.preventDefault();
 
-        const category = document.getElementById('category-select').value;
-        const rawAmount = parseFloat(document.getElementById('input-amount').value);
-        const currency = document.getElementById('input-currency').value;
-        const itemName = document.getElementById('input-item').value.trim();
+        const category =
+            document.getElementById('category-select').value;
 
-        if (isNaN(rawAmount) || rawAmount <= 0) return;
+        const rawAmount = parseFloat(
+            document.getElementById('input-amount').value
+        );
 
+        const currency =
+            document.getElementById('input-currency').value;
+
+        const itemName =
+            document.getElementById('input-item').value.trim();
+
+        if (isNaN(rawAmount) || rawAmount <= 0) {
+            return;
+        }
+
+        // 统一换算为美元
         let amountInUSD = rawAmount;
+
         if (currency === 'rmb') {
             amountInUSD = rawAmount / EXCHANGE_RATE;
         }
 
+        // 创建新记录
         const newRecord = {
             id: Date.now(),
             category: category,
@@ -635,12 +765,22 @@
             rawAmount: rawAmount,
             currency: currency,
             amountUSD: amountInUSD,
-            dateStr: new Date().toLocaleDateString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+            dateStr: new Date().toLocaleDateString(
+                'zh-CN',
+                {
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }
+            )
         };
 
         records.unshift(newRecord);
+
         saveData();
 
+        // 清空输入框
         document.getElementById('input-amount').value = '';
         document.getElementById('input-item').value = '';
 
@@ -649,49 +789,92 @@
         updateTotals();
     }
 
+
+    // 打开删除确认弹窗
     function promptDeleteRecord(id) {
         const item = records.find(r => r.id === id);
-        if (!item) return;
+
+        if (!item) {
+            return;
+        }
+
         recordToDeleteId = id;
-        document.getElementById('delete-item-desc').textContent = `删除「${item.itemName}」?`;
-        document.getElementById('delete-modal').classList.add('active');
+
+        document.getElementById('delete-item-desc').textContent =
+            `删除「${item.itemName}」?`;
+
+        document
+            .getElementById('delete-modal')
+            .classList.add('active');
     }
 
+
+    // 关闭删除弹窗
     function closeDeleteModal() {
-        document.getElementById('delete-modal').classList.remove('active');
+        document
+            .getElementById('delete-modal')
+            .classList.remove('active');
+
         recordToDeleteId = null;
     }
 
+
+    // 确认删除记录
     function confirmDeleteRecord() {
         if (recordToDeleteId !== null) {
-            records = records.filter(r => r.id !== recordToDeleteId);
+
+            records = records.filter(
+                r => r.id !== recordToDeleteId
+            );
+
             saveData();
+
             renderBudgets();
             renderRecords();
             updateTotals();
         }
+
         closeDeleteModal();
     }
 
+
+    // 计算某个分类的已消费金额
     function getCategorySpent(cat) {
         return records
             .filter(r => r.category === cat)
-            .reduce((sum, r) => sum + r.amountUSD, 0);
+            .reduce(
+                (sum, r) => sum + r.amountUSD,
+                0
+            );
     }
 
+
+    // 更新总预算和总支出
     function updateTotals() {
+
         let totalBudgetUSD = 0;
+
         for (let cat in budgets) {
             totalBudgetUSD += budgets[cat];
         }
 
-        let totalSpentUSD = records.reduce((sum, r) => sum + r.amountUSD, 0);
-        let remainingBalance = totalBudgetUSD - totalSpentUSD;
+        let totalSpentUSD = records.reduce(
+            (sum, r) => sum + r.amountUSD,
+            0
+        );
 
-        document.getElementById('total-balance').textContent = `$${remainingBalance.toFixed(2)}`;
-        document.getElementById('total-spent').textContent = `$${totalSpentUSD.toFixed(2)}`;
+        let remainingBalance =
+            totalBudgetUSD - totalSpentUSD;
 
-        const balanceEl = document.getElementById('total-balance');
+        document.getElementById('total-balance').textContent =
+            `$${remainingBalance.toFixed(2)}`;
+
+        document.getElementById('total-spent').textContent =
+            `$${totalSpentUSD.toFixed(2)}`;
+
+        const balanceEl =
+            document.getElementById('total-balance');
+
         if (remainingBalance < 0) {
             balanceEl.style.color = '#ff1744';
         } else {
@@ -699,117 +882,243 @@
         }
     }
 
+
+    // 渲染分类预算卡片
     function renderBudgets() {
-        const container = document.getElementById('budget-list');
+
+        const container =
+            document.getElementById('budget-list');
+
         container.innerHTML = '';
 
         for (let cat in budgets) {
+
             const budgetVal = budgets[cat];
+
             const spentVal = getCategorySpent(cat);
+
             const remaining = budgetVal - spentVal;
-            const percent = budgetVal > 0 ? Math.min(Math.max((spentVal / budgetVal) * 100, 0), 100) : 100;
+
+            const percent = budgetVal > 0
+                ? Math.min(
+                    Math.max((spentVal / budgetVal) * 100, 0),
+                    100
+                )
+                : 100;
 
             let fillClass = '';
-            if (percent > 90) fillClass = 'danger';
-            else if (percent > 70) fillClass = 'warning';
 
-            const meta = categoryMeta[cat] || { icon: '🐾', bg: '#fff' };
+            if (percent > 90) {
+                fillClass = 'danger';
+            } else if (percent > 70) {
+                fillClass = 'warning';
+            }
+
+            const meta =
+                categoryMeta[cat] || {
+                    icon: '🐾',
+                    bg: '#fff'
+                };
 
             const cardHtml = `
                 <div class="budget-card">
+
                     <div class="budget-card-header">
-                        <span class="cat-name">${meta.icon} ${cat}</span>
-                        <button class="edit-budget-btn" onclick="openBudgetModal('${cat}')" title="设置预算">🪎</button>
+                        <span class="cat-name">
+                            ${meta.icon} ${cat}
+                        </span>
+
+                        <button
+                            class="edit-budget-btn"
+                            onclick="openBudgetModal('${cat}')"
+                            title="设置预算"
+                        >🪎</button>
                     </div>
+
                     <div class="budget-progress-bg">
-                        <div class="budget-progress-fill ${fillClass}" style="width: ${percent}%;"></div>
+                        <div
+                            class="budget-progress-fill ${fillClass}"
+                            style="width: ${percent}%;"
+                        ></div>
                     </div>
+
                     <div class="budget-numbers">
                         <span>余: $${remaining.toFixed(1)}</span>
                         <span>设: $${budgetVal}</span>
                     </div>
+
                 </div>
             `;
-            container.insertAdjacentHTML('beforeend', cardHtml);
+
+            container.insertAdjacentHTML(
+                'beforeend',
+                cardHtml
+            );
         }
     }
 
+
+    // 渲染账单明细
     function renderRecords() {
-        const container = document.getElementById('records-list');
-        const countEl = document.getElementById('record-count');
+
+        const container =
+            document.getElementById('records-list');
+
+        const countEl =
+            document.getElementById('record-count');
+
         container.innerHTML = '';
 
-        countEl.textContent = `共 ${records.length} 笔`;
+        countEl.textContent =
+            `共 ${records.length} 笔`;
 
+        // 没有记录时显示提示
         if (records.length === 0) {
+
             container.innerHTML = `
                 <div class="empty-tip">
                     <span>🐱</span>
                     还没有买东西的记录哦，快去记一笔吧！
                 </div>
             `;
+
             return;
         }
 
         records.forEach(r => {
-            const meta = categoryMeta[r.category] || { icon: '🐾' };
-            const originalText = r.currency === 'rmb' 
-                ? `(¥${r.rawAmount.toFixed(2)})` 
+
+            const meta =
+                categoryMeta[r.category] || {
+                    icon: '🐾'
+                };
+
+            const originalText = r.currency === 'rmb'
+                ? `(¥${r.rawAmount.toFixed(2)})`
                 : '';
 
             const itemHtml = `
                 <div class="record-item">
+
                     <div class="record-left">
-                        <div class="record-icon">${meta.icon}</div>
+
+                        <div class="record-icon">
+                            ${meta.icon}
+                        </div>
+
                         <div class="record-details">
-                            <div class="record-title">${escapeHtml(r.itemName)}</div>
-                            <div class="record-sub">${r.category} · ${r.dateStr}</div>
+
+                            <div class="record-title">
+                                ${escapeHtml(r.itemName)}
+                            </div>
+
+                            <div class="record-sub">
+                                ${r.category} · ${r.dateStr}
+                            </div>
+
                         </div>
                     </div>
+
                     <div class="record-right">
+
                         <div>
-                            <div class="record-amount-usd">-$${r.amountUSD.toFixed(2)}</div>
-                            ${originalText ? `<div class="record-amount-original">${originalText}</div>` : ''}
+                            <div class="record-amount-usd">
+                                -$${r.amountUSD.toFixed(2)}
+                            </div>
+
+                            ${
+                                originalText
+                                ? `<div class="record-amount-original">${originalText}</div>`
+                                : ''
+                            }
                         </div>
-                        <button class="btn-del" onclick="promptDeleteRecord(${r.id})" title="删除记录">✖</button>
+
+                        <button
+                            class="btn-del"
+                            onclick="promptDeleteRecord(${r.id})"
+                            title="删除记录"
+                        >✖</button>
+
                     </div>
                 </div>
             `;
-            container.insertAdjacentHTML('beforeend', itemHtml);
+
+            container.insertAdjacentHTML(
+                'beforeend',
+                itemHtml
+            );
         });
     }
 
+
+    // 打开修改预算弹窗
     function openBudgetModal(cat) {
+
         currentEditingCat = cat;
-        document.getElementById('modal-cat-title').textContent = `修改【${cat}】预算 ($ usd)`;
-        document.getElementById('modal-budget-input').value = budgets[cat];
-        document.getElementById('budget-modal').classList.add('active');
+
+        document.getElementById('modal-cat-title').textContent =
+            `修改【${cat}】预算 ($ usd)`;
+
+        document.getElementById('modal-budget-input').value =
+            budgets[cat];
+
+        document
+            .getElementById('budget-modal')
+            .classList.add('active');
     }
 
+
+    // 关闭预算弹窗
     function closeBudgetModal() {
-        document.getElementById('budget-modal').classList.remove('active');
+
+        document
+            .getElementById('budget-modal')
+            .classList.remove('active');
+
         currentEditingCat = null;
     }
 
+
+    // 保存新预算
     function saveBudgetModal() {
-        if (!currentEditingCat) return;
-        const newBudget = parseFloat(document.getElementById('modal-budget-input').value);
+
+        if (!currentEditingCat) {
+            return;
+        }
+
+        const newBudget = parseFloat(
+            document.getElementById('modal-budget-input').value
+        );
+
         if (!isNaN(newBudget) && newBudget >= 0) {
+
             budgets[currentEditingCat] = newBudget;
+
             saveData();
+
             renderBudgets();
             updateTotals();
+
             closeBudgetModal();
         }
     }
 
+
+    // 防止用户输入的内容被当成 HTML 执行
     function escapeHtml(str) {
-        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+
+        return str
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
     }
 
+
+    // 页面加载时初始化
     init();
+
 </script>
 
 </body>
 </html>
-
